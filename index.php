@@ -74,7 +74,7 @@
         
         if (isset($_GET['search'])) {
             $query = $_GET['search'];
-            $search_result = shell_exec("ls $image_folder$query*.jpg 2>/dev/null"); // Assuming images are JPEG format
+            $search_result = shell_exec("ls $image_folder$query*.jpg"); // Assuming images are JPEG format
 
             if ($search_result !== null) {
                 $image_files = explode("\n", trim($search_result));
