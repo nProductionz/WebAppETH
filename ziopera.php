@@ -1,8 +1,28 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $command = $_POST['command'];
-    // Execute the command (unsafely)
-    $output = shell_exec("ping -c 4 " . $command);
+session_start();
+
+$request_method = $_SERVER["REQUEST_METHOD"] ?? '';
+
+// Check if the user is already logged in
+if(isset($_SESSION['username'])) {
+    header("Location: welcome.php");
+    exit;
+}
+
+// Check if the form is submitted
+if($request_method == "POST") {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    // Dummy authentication - Replace this with actual authentication logic
+    if($username === 'admin' && $password === 'password') {
+        // Store username in session and redirect to welcome page
+        $_SESSION['username'] = $username;
+        header("Location: welcome.php");
+        exit;
+    } else {
+        $login_error = true;
+    }
 }
 ?>
 
@@ -11,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Command Injection Demo</title>
+    <title>Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 0 auto;
             text-align: center;
         }
-        input[type="text"] {
+        input[type="text"], input[type="password"] {
             width: 60%;
             padding: 10px;
             margin-top: 10px;
@@ -43,26 +63,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         input[type="submit"]:hover {
             background-color: #45a049;
         }
-        .output {
-            width: 70%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #f2f2f2;
-            border-radius: 5px;
+        .error {
+            color: red;
         }
     </style>
 </head>
 <body>
-    <h1>Command Injection Demo</h1>
+    <h1>Login</h1>
     <form method="post" action="">
-        <input type="text" name="command" placeholder="Enter a domain to ping">
-        <input type="submit" value="Ping">
+        <input type="text" name="username" placeholder="Username"><br>
+        <input type="password" name="password" placeholder="Password"><br>
+        <input type="submit" value="Login">
     </form>
-    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-        <div class="output">
-            <h2>Output:</h2>
-            <pre><?php echo htmlentities($output); ?></pre>
-        </div>
+    <?php if(isset($login_error) && $login_error): ?>
+        <p class="error">Invalid username or password</p>
     <?php endif; ?>
 </body>
 </html>
