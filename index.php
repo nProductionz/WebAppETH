@@ -95,9 +95,6 @@
         if (strpos($search_result, ".jpg") !== false) {
           $answer = str_replace(".jpg", "", $search_result);
           $answer = str_replace("images/", "", $answer);
-          if(strpos($answer, "Teresa best waifu ma non siete pronti a questo discorso")){
-            $answer = str_replace("Cynthia Dark Magician Girl Faye Valentine Fubuki Kallen Makima Misato Sailor Venus Teletha", "", $answer);
-          }
         }
 
         if($search_result !== null) {  
