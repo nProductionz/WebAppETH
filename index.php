@@ -63,7 +63,7 @@
     </style>
 </head>
 <body>
-    <h1>Anime Waifu Gallery</h1>
+    <h1>Waifu Gallery</h1>
 
     <!-- Search form -->
     <form method="GET">
