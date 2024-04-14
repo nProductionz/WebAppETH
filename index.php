@@ -56,6 +56,10 @@
         button[type="submit"]:hover {
             background-color: #0056b3;
         }
+        #result {
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -68,10 +72,9 @@
         <button type="submit">Submit</button>
     </form>
 
-    <div class="gallery">
+    <div id="result">
         <?php
-        $image_folder = 'images/'; // Folder containing images
-        
+        $image_folder = 'images/'; // Folder containing images 
         if (isset($_GET['search'])) {
             $query = $_GET['search'];
             $search_result = shell_exec("ls $image_folder$query*.jpg"); // Assuming images are JPEG format
@@ -85,10 +88,23 @@
             // Retrieve all images in the folder
             $image_files = glob($image_folder . '*.jpg');
         }
-
+        
         // Display the images in the gallery
         $counter = 0;
+        $answer = $search_result;
+        if (strpos($search_result, ".jpg") !== false) {
+          $answer = str_replace(".jpg", "", $search_result);
+          $answer = str_replace("images/", "", $answer);
+        }
+          
+        echo "You have searched for: <b>".$answer."</b><br/>";
+        ?>
+    </div>
+
+    <div class="gallery">
+        <?php
         foreach ($image_files as $image) {
+
             echo "<img src='$image' alt='Anime Waifu'>";
             $counter++;
             // Break loop after 9 images
