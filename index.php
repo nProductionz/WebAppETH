@@ -96,8 +96,9 @@
           $answer = str_replace(".jpg", "", $search_result);
           $answer = str_replace("images/", "", $answer);
         }
-          
-        echo "You have searched for: <b>".$answer."</b><br/>";
+        if($search_result !== null) {  
+            echo "You have searched for: <b>".$answer."</b><br/>";
+        }
         ?>
     </div>
 
