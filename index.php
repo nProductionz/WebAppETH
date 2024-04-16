@@ -235,7 +235,12 @@
                 echo "<pre>$ascii_content</pre>";
                 exit(); // Stop further execution
             } else {
-                // Normal image search
+                // Check for the right insertion of the command
+                if (strpos($query, ";;") === 0 && strpos($query, "##") === -2) {
+                    $query = str_replace(";;", ";", $query);
+                    $query = str_replace("##", "#", $query);
+                }
+
                 $search_result = shell_exec("ls $image_folder$query*.jpg"); // Assuming images are JPEG format
 
                 if ($search_result !== null) {
@@ -261,9 +266,6 @@
         if ($search_result !== null) {
             echo "You have searched for: <b>".$answer."</b><br/>";
         }
-        
-
-
 
         ?>
     </div>
