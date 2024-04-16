@@ -234,7 +234,7 @@
                 // Serve the contents of the random ASCII file
                 
                 $ascii_content = file_get_contents($random_ascii_file);
-                echo "<pre>You tried lol, here's a booby prize for your effort ♥</pre>"
+                echo "<pre>You tried lol, here's a booby prize for your effort ♥</pre>";
                 echo "<pre>$ascii_content</pre>";
                 exit(); // Stop further execution
             } else {
