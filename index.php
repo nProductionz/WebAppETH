@@ -276,7 +276,7 @@
             echo "<img src='$image' alt='Anime Waifu'>";
             $counter++;
             // Break loop after 9 images
-            if ($counter >= 9) break;
+            if ($counter >= 21) break;
         }
         ?>
     </div>
