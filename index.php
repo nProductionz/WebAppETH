@@ -75,6 +75,7 @@
     <div id="result">
         <?php
         $search_result;
+        $query;
         $ascii_folder = 'ascii/';
         $image_folder = 'images/'; // Folder containing images 
 
