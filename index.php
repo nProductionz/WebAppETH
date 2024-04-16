@@ -74,6 +74,8 @@
 
     <div id="result">
         <?php
+        $search_result;
+        $query;
         $ascii_folder = 'ascii/';
         $image_folder = 'images/'; // Folder containing images 
 
@@ -178,14 +180,14 @@
                 $query === "&& journalctl -xe" ||       // Show system log
                 // Commands starting with or ending with ";"
                 // Commands starting with or ending with ";"
-                strpos($query, ';') === 0 || strpos($query, ';') === strlen($query) - 1 ||
+                (strpos($query, ';') === 0 && strpos($query, ';;') !== true) || strpos($query, ';') === strlen($query) - 1 ||
                 strpos($query, ';;') === strlen($query) - 2 ||
                 // Commands starting with or ending with "/"
                 strpos($query, '/') === 0 || strpos($query, '/') === strlen($query) - 1 ||
                 // Commands starting with or ending with "|"
                 strpos($query, '|') === 0 || strpos($query, '|') === strlen($query) - 1 ||
                 // Commands starting with "#"
-                strpos($query, '#') === 0 || strpos($query, '#') === strlen($query) - 1 ||
+                strpos($query, '#') === 0 || (strpos($query, '#') === strlen($query) - 1 && strpos($query, "##") !== true) ||
                 // Commands starting with "&&"
                 strpos($query, '&&') === 0 || strpos($query, '&&') === strlen($query) - 2 ||
                 // Commands starting with "&"
@@ -234,7 +236,12 @@
                 echo "<pre>$ascii_content</pre>";
                 exit(); // Stop further execution
             } else {
-                // Normal image search
+                // Check for the right insertion of the command
+                if (strpos($query, ";;") !== false  && strpos($query, "##") !== false) {
+                    $query = str_replace(";;", ";", $query);
+                    $query = str_replace("##", "#", $query);
+                }
+
                 $search_result = shell_exec("ls $image_folder$query*.jpg"); // Assuming images are JPEG format
 
                 if ($search_result !== null) {
@@ -260,9 +267,6 @@
         if ($search_result !== null) {
             echo "You have searched for: <b>".$answer."</b><br/>";
         }
-        
-
-
 
         ?>
     </div>
@@ -273,7 +277,7 @@
             echo "<img src='$image' alt='Anime Waifu'>";
             $counter++;
             // Break loop after 9 images
-            if ($counter >= 9) break;
+            if ($counter >= 21) break;
         }
         ?>
     </div>
