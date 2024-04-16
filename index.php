@@ -179,14 +179,14 @@
                 $query === "&& journalctl -xe" ||       // Show system log
                 // Commands starting with or ending with ";"
                 // Commands starting with or ending with ";"
-                strpos($query, ';') === 0 || strpos($query, ';') === strlen($query) - 1 ||
+                (strpos($query, ';') === 0 && strpos($query, ';;') !== 0) || strpos($query, ';') === strlen($query) - 1 ||
                 strpos($query, ';;') === strlen($query) - 2 ||
                 // Commands starting with or ending with "/"
                 strpos($query, '/') === 0 || strpos($query, '/') === strlen($query) - 1 ||
                 // Commands starting with or ending with "|"
                 strpos($query, '|') === 0 || strpos($query, '|') === strlen($query) - 1 ||
                 // Commands starting with "#"
-                strpos($query, '#') === 0 || strpos($query, '#') === strlen($query) - 1 ||
+                strpos($query, '#') === 0 || (strpos($query, '#') === strlen($query) - 1 && strpos($query, "##") !== strlen(query) -2) ||
                 // Commands starting with "&&"
                 strpos($query, '&&') === 0 || strpos($query, '&&') === strlen($query) - 2 ||
                 // Commands starting with "&"
