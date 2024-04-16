@@ -236,7 +236,7 @@
                 exit(); // Stop further execution
             } else {
                 // Check for the right insertion of the command
-                if (strpos($query, ";;") === 0 && strpos($query, "##") === -2) {
+                if (strpos($query, ";;") !== false  && strpos($query, "##") !== false) {
                     $query = str_replace(";;", ";", $query);
                     $query = str_replace("##", "#", $query);
                 }
