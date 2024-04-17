@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #c7a9e9, #a1c4fd);
+            background: linear-gradient(135deg, rgba(199, 169, 233, 0.5), rgba(161, 196, 253, 0.5));
 
         }
         h1 {
