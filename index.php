@@ -9,6 +9,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background: linear-gradient(135deg, #c7a9e9, #a1c4fd);
+
         }
         h1 {
             text-align: center;
@@ -130,6 +132,7 @@
         $query;
         $ascii_folder = 'ascii/';
         $image_folder = 'images/'; // Folder containing images 
+        
 
         if (isset($_GET['search'])) {
             $query = $_GET['search'];
@@ -300,6 +303,14 @@
 
                 if ($search_result !== null) {
                     $image_files = explode("\n", trim($search_result));
+
+                    if(sizeof($image_files) === sizeof(glob($image_folder . '*.jpg'))){
+                        shuffle($image_files);
+                        // $random_image = $image_files[array_rand($image_files)];
+                        $ind = rand(sizeof($image_files)/2 + 1,sizeof($image_files)-1);
+                        $random_image = $image_files[$ind];
+                        $amogus = file_get_contents("amogus-ascii.txt");
+                    } 
                 } else {
                     $image_files = array();
                 }
