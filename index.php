@@ -32,6 +32,58 @@
         .gallery img:hover {
             transform: scale(1.05);
         }
+        
+        .content {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: 0.6s;
+        }
+        .wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .wrapper:hover .content {
+            opacity: 1
+        }
+        .rand-img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .rand-img:hover > .content{
+            transform: scale(1.05);
+        }
+        .content h3 {
+            margin-top: 25px;
+            font-size: 50px;
+            color: #ffe100;
+            margin-bottom: 15px;
+            margin-left: 15px;
+            align-self: center;
+        }
+        .content > * {
+            transform: translateY(25px);
+            transition: transform;
+        }
+        .amogus {
+            align-self: center;
+            height: 28%;
+            width: auto;
+            font-size: 3px;
+            color: #f6c17b;
+            margin-bottom: 80px;
+        }
         form {
             text-align: center;
             margin-bottom: 20px;
@@ -255,6 +307,11 @@
         } else {
             // Retrieve all images in the folder
             $image_files = glob($image_folder . '*.jpg');
+            shuffle($image_files);
+            // $random_image = $image_files[array_rand($image_files)];
+            $ind = rand(sizeof($image_files)/2 + 1,sizeof($image_files)-1);
+            $random_image = $image_files[$ind];
+            $amogus = file_get_contents("amogus-ascii.txt");
         }
 
         // Display the images in the gallery
@@ -276,11 +333,23 @@
     <div class="gallery">
         <?php
         foreach ($image_files as $image) {
-            echo "<img src='$image' alt='Anime Waifu'>";
+            if ($image === $random_image){
+                
+                echo"<div class='wrapper'>";
+                echo "<img class='rand-img' src='$image' alt='Random Image'>";
+                echo "<div class='content'><h3>There is a flag among us.</h3>";
+                echo "<p><pre class='amogus'>$amogus</pre></p>";
+                echo "</div>";
+                echo"</div>";
+                
+            } else {
+                echo "<img src='$image' alt='Anime Waifu'>";
+            }
             $counter++;
             // Break loop after 9 images
             if ($counter >= 21) break;
         }
+        
         ?>
     </div>
 </body>
