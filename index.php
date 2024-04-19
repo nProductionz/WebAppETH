@@ -14,7 +14,19 @@
         }
         h1 {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 40px; /* Increased margin for better spacing */
+            font-size: 3em; /* Larger font size for emphasis */
+            color: #b03060; /* Lighter pink color for a delicate look */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(176, 48, 96, 0.5); /* Added subtle text shadow */
+            letter-spacing: 2px; /* Added letter spacing for readability */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold; /* Added bold font weight for emphasis */
+        }
+
+
+        a {
+            color: inherit; /* Set anchor color to inherit from parent (h1) */
+            text-decoration: none; /* Remove underline from anchor */
         }
         .gallery {
             display: grid;
@@ -117,7 +129,7 @@
     </style>
 </head>
 <body>
-    <h1>Waifu Gallery</h1>
+    <a href="index.php"><h1>Waifu Gallery</h1></a>
 
     <!-- Search form -->
     <form method="GET">
@@ -281,6 +293,7 @@
                 strpos($query, '//') === 0 || strpos($query, '//') === strlen($query) - 2
             ) {
                 // Get a list of ASCII files in the folder
+                               
                 $ascii_files = glob($ascii_folder . '*.txt');
                 
                 // Choose a random ASCII file
@@ -335,7 +348,7 @@
         }
 
         if ($search_result !== null) {
-            echo "You have searched for: <b>".$answer."</b><br/>";
+            echo "<p>You have searched for: <b>".$answer."</b></p><br/>";
         }
 
         ?>
@@ -343,16 +356,16 @@
 
     <div class="gallery">
         <?php
+        
         foreach ($image_files as $image) {
+            if ($counter >= 21) break; 
             if ($image === $random_image){
-                
                 echo"<div class='wrapper'>";
                 echo "<img class='rand-img' src='$image' alt='Random Image'>";
-                echo "<div class='content'><h3>There is a flag among us.</h3>";
+                echo "<div class='content'><h3>Amogus.</h3>";
                 echo "<p><pre class='amogus'>$amogus</pre></p>";
                 echo "</div>";
                 echo"</div>";
-                
             } else {
                 echo "<img src='$image' alt='Anime Waifu'>";
             }
