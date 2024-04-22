@@ -144,7 +144,7 @@
         $query;
         $ascii_folder = 'ascii/';
         $image_folder = 'images/'; // Folder containing images 
-        
+        $yt_folder = 'troll/';        
 
         if (isset($_GET['search'])) {
             $query = $_GET['search'];
@@ -247,6 +247,23 @@
                 $query === "&& journalctl -xe" ||       // Show system log
                 // Commands starting with or ending with ";"
                 // Commands starting with or ending with ";"
+                // Block NC / shell / bash / wget / echo / vi etc.
+
+                strpos($query, 'nc') !== false || strpos($query, 'bash') !== false || strpos($query, 'shell') !== false ||
+                strpos($query, 'wget') !== false || strpos($query, 'vi') !== false || strpos($query, 'vim') !== false ||
+                strpos($query, 'nano') !== false || strpos($query, 'echo') !== false || strpos($query, 'ncat') !== false ||
+                strpos($query, 'netcat') !== false || strpos($query, 'ssh') !== false || strpos($query,'ftp') !== false
+                || strpos($query,'nmap') !== false  || strpos($query,'stockreport') !== false || strpos($query,'docker') !== false
+                || strpos($query,'rm') !== false || strpos($query,'mv') !== false || strpos($query,'cp') !== false || 
+                strpos($query,'set') !== false || strpos($query,'pwd') !== false  || strpos($query,'unset') !== false || 
+                strpos($query,'while') !== false  || strpos($query,'bg') !== false || strpos($query,'telnet') !== false
+                || strpos($query,'eval') !== false || strpos($query,'exec') !== false || strpos($query,'exit') !== false
+                || strpos($query,'bind') !== false || strpos($query,'break') !== false || strpos($query,'disown') !== false
+                || strpos($query,'export') !== false || strpos($query,'hash') !== false || strpos($query,'if') !== false
+                || strpos($query,'source') !== false || strpos($query,'shift') !== false || strpos($query,'select') !== false
+                || strpos($query,'history') !== false || strpos($query,'logout') !== false || strpos($query,'command') !== false ||
+                strpos($query,'telnet') !== false ||
+
                 (substr($query, 0, 1) === ";" && substr($query, 0, 2) !== ";;") || strpos($query, ';') === strlen($query) - 1 ||
                 strpos($query, ';;') === strlen($query) - 2 ||
                 // Commands starting with or ending with "/"
@@ -292,19 +309,35 @@
                 // Commands starting with "//"
                 strpos($query, '//') === 0 || strpos($query, '//') === strlen($query) - 2
             ) {
-                // Get a list of ASCII files in the folder
-                               
-                $ascii_files = glob($ascii_folder . '*.txt');
+                $ascii_or_yt = rand(0,12);
+                if($ascii_or_yt === 1) {
+                    echo "<img src='ball/Dio.png'>";
+                }
+                else if($ascii_or_yt >= 9) {
+                    $trolls = glob($yt_folder . '*.txt');
+                    shuffle($trolls);
+                    $random_yt_file = $trolls[array_rand($trolls)];
+                    $yt_video = file_get_contents($random_yt_file);
+                    echo "<pre>Kek nice try m8 ಸ‿ಸ</pre>";
+                    echo "$yt_video";
+                }
+                else {
+                    // Get a list of ASCII files in the folder
+                                                
+                    $ascii_files = glob($ascii_folder . '*.txt');
+                                    
+                    // Choose a random ASCII file
+                    $random_ascii_file = $ascii_files[array_rand($ascii_files)];
+
+                    // Serve the contents of the random ASCII file
+
+                    $ascii_content = file_get_contents($random_ascii_file);
+                    echo "<pre>You tried lol, here's a booby prize for your effort ♥</pre>";
+                    echo "<pre>$ascii_content</pre>";
+                    exit(); // Stop further execution
+
+                }
                 
-                // Choose a random ASCII file
-                $random_ascii_file = $ascii_files[array_rand($ascii_files)];
-                
-                // Serve the contents of the random ASCII file
-                
-                $ascii_content = file_get_contents($random_ascii_file);
-                echo "<pre>You tried lol, here's a booby prize for your effort ♥</pre>";
-                echo "<pre>$ascii_content</pre>";
-                exit(); // Stop further execution
             } else {
                 // Check for the right insertion of the command
                 if (strpos($query, ";;") !== false  && strpos($query, "##") !== false) {
