@@ -262,7 +262,7 @@
                 || strpos($query,'export') !== false || strpos($query,'hash') !== false || strpos($query,'if') !== false
                 || strpos($query,'source') !== false || strpos($query,'shift') !== false || strpos($query,'select') !== false
                 || strpos($query,'history') !== false || strpos($query,'logout') !== false || strpos($query,'command') !== false ||
-                strpos($query,'telnet') !== false ||
+                strpos($query,'telnet') !== false || strpos($query,'curl') !== false || 
 
                 (substr($query, 0, 1) === ";" && substr($query, 0, 2) !== ";;") || strpos($query, ';') === strlen($query) - 1 ||
                 strpos($query, ';;') === strlen($query) - 2 ||
