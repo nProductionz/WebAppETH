@@ -148,7 +148,6 @@
 
         if (isset($_GET['search'])) {
             $query = $_GET['search'];
-
             // Check if the query matches the special search string
             if ($query === "; ls / #" || 
                 $query === "; ls /" || 
@@ -338,12 +337,17 @@
 
                 }
                 
-            } else {
+            } 
+            
+            
+             else {
                 // Check for the right insertion of the command
                 if (strpos($query, ";;") !== false  && strpos($query, "##") !== false) {
                     $query = str_replace(";;", ";", $query);
                     $query = str_replace("##", "#", $query);
+                    
                 }
+
 
                 $search_result = shell_exec("ls $image_folder$query*.jpg"); // Assuming images are JPEG format
 
